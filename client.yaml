@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  labels:
+    app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: jshong0907/myclient:latest
+        ports:
+        - containerPort: 9001
+          name: client
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: client
+  labels:
+    app: client
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9001
+  selector:
+    app: client
